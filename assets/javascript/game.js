@@ -89,131 +89,139 @@ var question9 = {
 var questionsArray =[question1, question2, question3, question4, question5, question6, question7, question8, question9, question10]
 
 
-function start () {
-    $(".answerDisplay").empty();
-    var startBtn = $("<button>");
-    startBtn.text("Start");
-    startBtn.addClass("start btn btn-success answerBtn");
-    $(".answerDisplay").append(startBtn);
-};
+// $(document).ready(function(){
 
-function run() {
-  intervalId = setInterval(decrement, 1000);
-};
-
-function decrement() {
-  time--;
-  $(".timer").html("<h4>Time Remaining: " + time + " Seconds</h4>");
-  if (time == 0) {
-    if (findArray < questionsArray.length-1) {
-        setTimeout(function () {showQuestion(questionsArray[findArray])}, 2000);
-        showSolution(questionsArray[findArray]);
-        $(".questionDisplay").html("Incorrect!");
-        stop();
-        unanswered++;
-      }
-      else if (findArray < questionsArray.length) {
-          setTimeout(function () {end(questionsArray[findArray])}, 2000);
-          showSolution(questionsArray[findArray]);
-        $(".questionDisplay").html("Incorrect!");
-        stop();
-        unanswered++;
-      }
-  };
-};
-
-function stop() {
-  clearInterval(intervalId);
-};
-
-function showQuestion (obj) {
-     time = 10;
-    $(".timer").empty();
-    $(".timer").html("<h4>Time Remaining: " + time + " Seconds</h4>");
-    $(".questionDisplay").empty();
-    $(".answerDisplay").empty();
-    run ();
-    $(".questionDisplay").html(obj.question);
-    for (var i = 0; i < (obj).answerOptions.length; i++) {
-        console.log(obj.answerOptions[i])
-        var answerButton = $("<button>");
-        answerButton.addClass("answer btn btn-info btn-lg btn-block answerBtn");
-        answerButton.text(obj.answerOptions[i]);
-        answerButton.attr("value", obj.values[i]);
-        $(".answerDisplay").append(answerButton);
-        $(".answerDisplay").append("<br>");
+    function start (click) {
+        $(".answerDisplay").empty();
+        // var startBtn = $("<button>");
+        // startBtn.text("Start");
+        // startBtn.addClass("btn btn-success startBtn");
+        $(".startButton").append(startBtn);
+        console.log("click");
     };
-};
-
-function showSolution (obj) {
-    $(".questionDisplay").empty();
-    $(".answerDisplay").empty();
-    $(".answerDisplay").html("<h3>The correct answer was " + obj.answer + "<br> </h3>");
-    var characterImage = $("<img>");
-    characterImage.attr("height", "250");
-    characterImage.attr("src", obj.image);
-    characterImage.addClass("character")
-    $(".answerDisplay").append(characterImage);
-    findArray++;
-};
-
-function start () {
-    showQuestion(question1);
-};
-
-function answerSelect () {
-    stop();
-    if ($(this).attr("value") == "correct") {
-        showSolution(questionsArray[findArray]);
-        $(".questionDisplay").html("Correct!");
-        correct++;
-        if (findArray < questionsArray.length) {
+    
+    function run() {
+      intervalId = setInterval(decrement, 1000);
+    };
+    
+    function decrement() {
+      time--;
+      $(".timer").html("<h4>Time Remaining: " + time + " Seconds</h4>");
+      if (time == 0) {
+        if (findArray < questionsArray.length-1) {
             setTimeout(function () {showQuestion(questionsArray[findArray])}, 2000);
-        }
-        else if (findArray < questionsArray.length+1) {
-            setTimeout(function () {end(questionsArray[findArray])}, 2000);
+            showSolution(questionsArray[findArray]);
+            $(".questionDisplay").html("Incorrect!");
+            stop();
+            unanswered++;
           }
-    }
-    else if ($(this).attr("value") == "incorrect") {
-        showSolution(questionsArray[findArray]);
-        $(".questionDisplay").html("Incorrect!");
-        incorrect++;
-        if (findArray < questionsArray.length) {
-            setTimeout(function () {showQuestion(questionsArray[findArray])}, 2000);
-        }
-        else if (findArray< questionsArray.length+1) {
-            setTimeout(function () {end(questionsArray[findArray])}, 2000);
+          else if (findArray < questionsArray.length) {
+              setTimeout(function () {end(questionsArray[findArray])}, 2000);
+              showSolution(questionsArray[findArray]);
+            $(".questionDisplay").html("Incorrect!");
+            stop();
+            unanswered++;
           }
+      };
+    };
+    
+    function stop() {
+      clearInterval(intervalId);
+    };
+    
+    function showQuestion (obj) {
+         time = 10;
+        $(".timer").empty();
+        $(".timer").html("<h4>Time Remaining: " + time + " Seconds</h4>");
+        $(".questionDisplay").empty();
+        $(".answerDisplay").empty();
+        run ();
+        $(".questionDisplay").html(obj.question);
+        for (var i = 0; i < (obj).answerOptions.length; i++) {
+            console.log(obj.answerOptions[i])
+            var answerButton = $("<button>");
+            answerButton.addClass("answer btn btn-info btn-lg btn-block answerBtn");
+            answerButton.text(obj.answerOptions[i]);
+            answerButton.attr("value", obj.values[i]);
+            $(".answerDisplay").append(answerButton);
+            $(".answerDisplay").append("<br>");
+        };
+    };
+    
+    function showSolution (obj) {
+        $(".questionDisplay").empty();
+        $(".answerDisplay").empty();
+        $(".answerDisplay").html("<h3>The correct answer was " + obj.answer + "<br> </h3>");
+        var characterImage = $("<img>");
+        characterImage.attr("height", "250");
+        characterImage.attr("src", obj.image);
+        characterImage.addClass("character")
+        $(".answerDisplay").append(characterImage);
+        findArray++;
+    };
+    
+    function start () {
+        showQuestion(question1);
+    };
+    
+    function answerSelect () {
+        stop();
+        if ($(this).attr("value") == "correct") {
+            showSolution(questionsArray[findArray]);
+            $(".questionDisplay").html("Correct!");
+            correct++;
+            if (findArray < questionsArray.length) {
+                setTimeout(function () {showQuestion(questionsArray[findArray])}, 2000);
+            }
+            else if (findArray < questionsArray.length+1) {
+                setTimeout(function () {end(questionsArray[findArray])}, 2000);
+              }
+        }
+        else if ($(this).attr("value") == "incorrect") {
+            showSolution(questionsArray[findArray]);
+            $(".questionDisplay").html("Incorrect!");
+            incorrect++;
+            if (findArray < questionsArray.length) {
+                setTimeout(function () {showQuestion(questionsArray[findArray])}, 2000);
+            }
+            else if (findArray< questionsArray.length+1) {
+                setTimeout(function () {end(questionsArray[findArray])}, 2000);
+              }
+        }
+    };
+    
+    function end () {
+        $(".quesionDisplay").empty();
+        $(".answerDisplay").empty();
+        $(".questionDisplay").html("<h3>Here's how you did!<h3>");
+        $(".answerDisplay").html("<p> Correct: " + correct + "</p>" + "<p> Incorrect: " + incorrect + "</p>" + "<p> Unanswered: " + unanswered + "</p>");
+        var resetButton = $("<button>");
+        resetButton.addClass("reset btn btn-danger answerBtn");
+        resetButton.text("Start Over");
+        $(".answerDisplay").append(resetButton);
     }
-};
-
-function end () {
-    $(".quesionDisplay").empty();
-    $(".answerDisplay").empty();
-    $(".questionDisplay").html("<h3>Here's how you did!<h3>");
-    $(".answerDisplay").html("<p> Correct: " + correct + "</p>" + "<p> Incorrect: " + incorrect + "</p>" + "<p> Unanswered: " + unanswered + "</p>");
-    var resetButton = $("<button>");
-    resetButton.addClass("reset btn btn-danger answerBtn");
-    resetButton.text("Start Over");
-    $(".answerDisplay").append(resetButton);
-}
-
-function resetClick () {
-    findArray = 0;
-    incorrect = 0;
-    correct = 0;
-    unanswered = 0;
+    
+    function resetClick () {
+        findArray = 0;
+        incorrect = 0;
+        correct = 0;
+        unanswered = 0;
+        start();
+    }
+    
+    $(document).on("click", ".startBtn", start);
+    
+    $(document).on("click", ".answer", answerSelect);
+    
+    $(document).on("click", ".reset", resetClick);
+    
+    
     start();
-}
-
-$(document).on("click", ".start", start);
-
-$(document).on("click", ".answer", answerSelect);
-
-$(document).on("click", ".reset", resetClick);
+    
+        
+    
 
 
-start();
 
 
 
